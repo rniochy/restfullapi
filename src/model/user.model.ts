@@ -21,17 +21,17 @@ const UserSchema = new mongoose.Schema(
     }
 );
 
-UserSchema.pre("save", async (next) =>{ 
-    let user:UserDocument = (this as unknown) as UserDocument;
+// UserSchema.pre("save", async (next) =>{ 
+//     let user = this as UserDocument;
 
-    if(!user.isModified('password')) return next(); 
+//     if(!user.isModified('password')) return next(); 
 
-    const salt = await bcrypt.genSalt(config.get("saltWorkFactor"));
-    const hash = await bcrypt.hashSync(user.password, salt);
+//     const salt = await bcrypt.genSalt(config.get("saltWorkFactor"));
+//     const hash = await bcrypt.hashSync(user.password, salt);
     
-    user.password = hash;
-    next();
-});
+//     user.password = hash;
+//     next();
+// });
 
 UserSchema.methods.comparePassord = async function (
     candidatePassword: string
