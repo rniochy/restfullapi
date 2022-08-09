@@ -8,7 +8,7 @@ export async function createUserHandler(req: Request, res: Response){
          const user = await createUser(req.body)
          return res.send(omit(user.toJSON(), "password"));
     } catch (error: any) {
-         return res.status(400).send({error: error.message});
+         return res.status(400).send({error: "User exist!"});
     }
 }
 

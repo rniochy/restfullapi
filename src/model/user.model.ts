@@ -8,7 +8,7 @@ export interface UserDocument extends Document {
     password: string;
     createdAt: Date;
     updatedAt: Date;
-    comparePassord(candidatePassword: string): Promise<Boolean>;
+    comparePassword(candidatePassword: string): Promise<Boolean>;
 }
 const UserSchema = new Schema(
     {
@@ -27,13 +27,13 @@ UserSchema.pre("save", async function(next){
     if(!user.isModified('password')) return next(); 
 
     const salt = await bcrypt.genSalt(config.get("saltWorkFactor"));
-    const hash = await bcrypt.hashSync(user.password, salt);
+    const hash = await bcrypt.hash(user.password, salt); 
     
     user.password = hash;
     next();
 });
 
-UserSchema.methods.comparePassord = async function (
+UserSchema.methods.comparePassword = async function (
     candidatePassword: string
 ){
     const user = this as UserDocument;
