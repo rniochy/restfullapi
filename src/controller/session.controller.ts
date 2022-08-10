@@ -11,4 +11,6 @@ export async function sessionUserHandler(req: Request, res: Response){
 
      const session = createSession(user._id, req.get("user-agent") || "");
 
+     
+
 }
