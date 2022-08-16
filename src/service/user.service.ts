@@ -8,7 +8,7 @@ export async function createUser(input: DocumentDefinition<UserDocument>){
     } catch(error: any){
         throw new Error(error);
     }
-}
+} 
 
 function findUser(){}
 
@@ -21,5 +21,5 @@ export async function validatePassword({email, password}: {email: UserDocument["
 
     if(!isValid) return false;
 
-    return omit(user.toJSON(), "password");
+    return omit(user, "password");
 }

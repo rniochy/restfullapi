@@ -7,8 +7,7 @@ import {sessionUserSchema} from "./schema/session.schema";
 
 
 export default function(app: Express){
- app.get("/test", (req: Request, res: Response)=> res.sendStatus(200));
- 
+ app.get("/test", (req: Request, res: Response)=> res.sendStatus(200)); 
  app.post("/api/createuser", validateRequest(createUserSchema), createUserHandler);
  app.post("/api/createsession", validateRequest(sessionUserSchema), sessionUserHandler);
 }
