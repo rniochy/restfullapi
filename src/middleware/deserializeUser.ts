@@ -11,16 +11,17 @@ const deserializeUser = async (
         const acessToken = get(req, "headers.authorization", "").replace(/^Bearer\s/,"");
 
         const refreshToken = get(req, "headers.x-refresh");
-
+        
         if(!acessToken) return next();
-
+        
         const {decoded, expired} = decode(acessToken);
-
+        
         if(decoded){
-            req['body'].user = decoded;
+            //@ts-ignore
+            req.user = decoded;
             return next();
         }
-
+        
         if(expired && refreshToken){
             const newAcessToken = await reIssueAcessToken({refreshToken});
             
@@ -29,12 +30,11 @@ const deserializeUser = async (
                 res.setHeader("x-acess-token", newAcessToken);
 
                 const {decoded} = decode(newAcessToken);
-
-                req.body.user = decoded;
+                //@ts-ignore
+                req.user = decoded;
             }
              return next();
         }
         return next();
 }
 export default deserializeUser;
-

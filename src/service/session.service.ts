@@ -31,6 +31,7 @@ export function createAcessToken({
 
 export async function reIssueAcessToken({refreshToken}: {refreshToken: string}){
     const {decoded} = decode(refreshToken);
+    console.log(decoded);
 
     if(!decoded || !get(decoded, "_id")) return false;
 
@@ -43,6 +44,6 @@ export async function reIssueAcessToken({refreshToken}: {refreshToken: string}){
     if(!user) return false;
 
     const acessToken = createAcessToken({user, session});
-    
+     
     return acessToken;
 }
