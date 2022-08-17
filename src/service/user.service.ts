@@ -1,6 +1,5 @@
 import { omit } from "lodash";
 import {DocumentDefinition, FilterQuery, UpdateQuery} from "mongoose";
-import Session, { SessionDocument } from "../model/session.model";
 import User, {UserDocument} from '../model/user.model';
 
 export async function createUser(input: DocumentDefinition<UserDocument>){
@@ -27,9 +26,3 @@ export async function validatePassword({email, password}: {email: UserDocument["
     return omit(user, "password");
 }
 
-export async function updateSession(
-     query: FilterQuery<SessionDocument>,
-     update: UpdateQuery<SessionDocument>
-){
-    return Session.updateOne(query, update);
-}
