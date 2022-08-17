@@ -1,8 +1,9 @@
 import {Request, Response} from "express";
 import config from 'config';
-import createSession, { createAccesToken } from "../service/session.service";
-import { validatePassword } from "../service/user.service";
+import createSession, { createAcessToken } from "../service/session.service";
+import { updateSession, validatePassword } from "../service/user.service";
 import { sign } from "../util/jwt.util";
+import { get } from "lodash";
 
 export async function sessionUserHandler(req: Request, res: Response){
      const user = await validatePassword(req.body);
@@ -13,7 +14,7 @@ export async function sessionUserHandler(req: Request, res: Response){
 
      const session = await createSession(user._id, req.get("user-agent") || "");
     
-     const acessToken = createAccesToken({ user, session});
+     const acessToken = createAcessToken({ user, session});
 
      const refreshToken = sign(
             {session: session}, 
@@ -25,5 +26,11 @@ export async function sessionUserHandler(req: Request, res: Response){
     return res.send(
         {acessToken, refreshToken}
     );
+}
 
+export async function invalidateUserSessionHandler(req: Request, res: Response){
+      const sessionId = get(req, "user.session");
+
+      await updateSession({_id: sessionId},{valid: false});
+      return res.sendStatus(200);
 }
