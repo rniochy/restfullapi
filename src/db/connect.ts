@@ -3,7 +3,7 @@
 
    export default function connect(){
         const dbUri = config.get("dbUri") as string;
-
+        
         return mongoose.connect(dbUri, {
         })
         .then(()=> {
