@@ -4,6 +4,8 @@ import {invalidateUserSessionHandler, sessionUserHandler, getUserSessionsHandler
 import {validateRequest, requiresUser} from "./middleware"
 import { createUserSchema} from "./schema/user.schema";
 import {sessionUserSchema} from "./schema/session.schema"; 
+import { createPostSchema, deletePostSchema, updatePostSchema } from "./schema/post.schema";
+import { createPostHandler, deletePostHandler, getPostHandler, updatePostHandler } from "./controller/post.controler";
 
 
 export default function(app: Express){
@@ -17,4 +19,14 @@ export default function(app: Express){
  app.get("/api/sessions", requiresUser, getUserSessionsHandler); 
  //LOGOUT
  app.delete("/api/sessions", requiresUser, invalidateUserSessionHandler)
+
+ /*  POST OF USER*/
+ // create a post 
+ app.post("/api/createpost", [requiresUser, validateRequest(createPostSchema)], createPostHandler);
+ // get post
+ app.get("/api/createpost/:postId", getPostHandler); 
+ // update post
+ app.put("/api/post/:postId", [requiresUser, validateRequest(updatePostSchema)], updatePostHandler);
+ // delete post
+ app.delete("/api/post/:postId", [requiresUser, validateRequest(deletePostSchema)], deletePostHandler);
 }

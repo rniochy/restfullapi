@@ -12,10 +12,9 @@ const SessionSchema = new Schema({
     user:{type: Schema.Types.ObjectId, ref: "User"},
     valid: {type:Boolean, default: true},
     userAgent: {type: String},
-},
- {timestamps: true}
+    },
+    {timestamps: true}
 );
 
 const Session = model<SessionDocument>("Session", SessionSchema);
-
 export default Session;
